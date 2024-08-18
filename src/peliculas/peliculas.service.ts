@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Pelicula } from 'src/pelicula';
+import { Usuario } from 'src/usuario';
 
 @Injectable()
 export class PeliculasService {
@@ -98,5 +99,17 @@ export class PeliculasService {
         return false;
       }
     }
+  }
+  //sugerir peliculas por usuario
+  sugerirPeliculas(usuario: Usuario) {
+    const peliculasSugeridas: Pelicula[] = [];
+    for (let x = 0; x < usuario.generoFavoritos.length; x++) {
+      for (let i = 0; i < this.peliculas.length; i++) {
+        if (this.peliculas[i].genero == usuario.generoFavoritos[x]) {
+          peliculasSugeridas.push(this.peliculas[i]);
+        }
+      }
+    }
+    return peliculasSugeridas;
   }
 }
